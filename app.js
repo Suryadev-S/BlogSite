@@ -9,7 +9,7 @@ const app = express();
 const MongoDBStore = mongodbStore(session);
 
 const sessionStore = new MongoDBStore({
-    uri: "mongodb://127.0.0.1:27017/",
+    uri: process.env.MONGODB_URL,
     databaseName: "blog",
     collection: "sessions"
 })
@@ -35,7 +35,7 @@ app.use(routes);
 app.set("view engine","ejs");
 
 db.initDb().then(()=>{
-    app.listen(3000,()=>{
+    app.listen(3000 || process.env.PORT,()=>{
         console.log("port and database connected");
 })
 })
